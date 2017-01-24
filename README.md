@@ -5,7 +5,7 @@ This repository contains basic python files of [ddrsmile/CarND-Behavioral-Clonin
 ## Quick Start
 
 ### Generate Training Data
-**use `--data_path` to set the folder which contain image data and driving log***
+**use `--data_path` to set the folder which contain image data and driving log**
 #### Model
 ```
 time python data_gen.py --crop_from=53 --crop_to=133 --new_h=16 --new_w=64 --recovery_angle=0.25 --perturb=0.01 --flip=0.01 --gray_method='hsv'
