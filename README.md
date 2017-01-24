@@ -1,5 +1,7 @@
 # CarND-Behavioral-Cloning-Mini
 
+This repository contains basic python files of [ddrsmile/CarND-Behavioral-Cloning](https://github.com/ddrsmile/CarND-Behavioral-Cloning)
+
 ## Quick Start
 
 ### Generate Training Data
