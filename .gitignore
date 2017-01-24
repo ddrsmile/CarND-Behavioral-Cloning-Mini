@@ -1,0 +1,9 @@
+Default Mac desktop Universal.app/
+data.zip
+data
+*.pyc
+.DS_Store
+bk/
+*.npy
+__pycache__
+*.mov
