@@ -6,27 +6,37 @@ from keras.models import Sequential
 
 def get_model():
     model = Sequential()
-    ### SOLUTION: Layer 1: Convolutional follwed by Maxpooling.
+    ### SOLUTION: Layer 1: Convolutional with 4x4 patch, 16 features and (4, 4) stride of 'same' border
     model.add(Conv2D(16, 4, 4, subsample=(4, 4), input_shape=(16, 64, 1), border_mode='same'))
+    ###@ Activation function: Exponential linear unit
     model.add(ELU())
+    
+    ### SOLUTION: Layer 2: Maxpooling with 2x2 patch and (1, 2) stride of 'valid' border
     model.add(MaxPooling2D((2, 2), strides=(1, 2), border_mode='valid'))
 
-    ### SOLUTION: Layer 2: Convolutional follwed by Maxpooling.
+    ### SOLUTION: Layer 3: Convolutional with 2x2 patch, 32 feature and (2, 2) stride of 'same' border
     model.add(Conv2D(32, 2, 2, subsample=(2, 2), border_mode='same'))
+    #### Activation function: Exponential linear unit
     model.add(ELU())
+    #### Droupout 50%
     model.add(Dropout(0.5))
+    
+    ### SOLUTION: Layer 4: Maxpooling with 2x2 patch and (1, 2) stride of valid border
     model.add(MaxPooling2D((2,2), strides=(1, 2), border_mode='valid'))
 
-    ### SOLUTION: Layer 3: Flatten.
+    ### SOLUTION: Layer 5: Flatten
     model.add(Flatten())
 
-    ### SOLUTION: Layer 4: Fully connected with dropout.
+    ### SOLUTION: Layer 6: Fully connected with output 512 feature
     model.add(Dense(512))
+    #### Dropout 50%
     model.add(Dropout(0.5))
+    #### Activation function: Exponential linear unit
     model.add(ELU())
 
-    ### SOLUTION: Layer 5: Fully connected with a single output since this is a regression problem.
+    ### SOLUTION: Layer 7: Fully connected with a single output since this is a regression problem.
     model.add(Dense(1))
+
     model.compile(optimizer='adam', loss='mse', metrics=['mse'])
     return model
 

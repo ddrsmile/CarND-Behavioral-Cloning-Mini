@@ -6,18 +6,21 @@ from keras.models import Sequential
 
 def get_model():
     model = Sequential()
-    ### SOLUTION: Layer 1: Convolutional follwed by max pooling and dropout.
+    ### SOLUTION: Layer 1: Convolutional with 3x3 patch, 2 feature and (2, 2) stride of 'valid' border
+    #### ReLU is chosen as the activation function
     model.add(Conv2D(2, 3, 3, subsample=(2, 2), input_shape=(16, 32, 1), border_mode='valid', activation='relu'))
-    #### using 2, 4 as k is because the ratio of the size is 1:2.
+
+    ### SOLUTION: Layer 2: Max pooling with 2x4 patch and (4, 4) stride of 'same'
     model.add(MaxPooling2D((2, 4), strides=(4, 4), border_mode='same'))
-    #### although the size of tiny model is samll, dropout is still used to prevent overfitting.
+    #### Droupout 25%
     model.add(Dropout(0.25))
 
-    ### SOLUTION: Layer 2: Flatten.
+    ### SOLUTION: Layer 3: Flatten
     model.add(Flatten())
     
-    ### SOLUTION: Layer 3: Fully connected with a single output since this is a regression problem..
+    ### SOLUTION: Layer 4: Fully connected with a single output since this is a regression problem
     model.add(Dense(1))
+
     model.compile(optimizer='adam', loss='mse', metrics=['mse'])
     return model
 
