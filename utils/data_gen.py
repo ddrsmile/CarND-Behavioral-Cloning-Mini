@@ -8,14 +8,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import cv2
 
-# import my utils for data argumentation
+# import my utils for data augmentation
 from preprocessor import (crop_image, 
                            resize_image, 
                            to_gray_hsv, 
                            to_gray_yuv, 
                            to_gray_cv2)
 
-def argument_log(log, args):
+def augment_log(log, args):
 
     cameras = ['center', 'left', 'right']
     tmps = None
@@ -105,7 +105,7 @@ def preprocess_image(image, args):
     ## reshape the image array for inputting the cnn model
     return image.reshape(args.new_h, args.new_w, n_channel)
 
-def get_argumented_data(row, args):
+def get_augmented_data(row, args):
     angle = row['steering']
     ## load image data with regenerate logs
     image = plt.imread(path.join(args.data_path, row['file_name'].strip()))
@@ -169,8 +169,8 @@ if __name__ == '__main__':
     ## load driving logs
     log = pd.read_csv(path.join(args.data_path, 'driving_log.csv'), 
                       usecols=[0, 1, 2, 3])
-    ## argument log information.
-    log = argument_log(log, args)
+    ## augment log information.
+    log = augment_log(log, args)
     ## shuffle the order of the data.
     log = log.sample(frac=1, random_state=1).reset_index(drop=True)
 
@@ -180,7 +180,7 @@ if __name__ == '__main__':
     x = np.empty([log.shape[0], args.new_h, args.new_w, n_channel])
     y = np.empty([log.shape[0]])
     for index, row in log.iterrows():
-        x[index], y[index] = get_argumented_data(row, args)
+        x[index], y[index] = get_augmented_data(row, args)
     
     np.save("x.data.{}".format(args.suffix), x)
     np.save("y.data.{}".format(args.suffix), y)
